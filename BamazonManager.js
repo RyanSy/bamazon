@@ -143,17 +143,16 @@ connection.connect(function(err){
 			prompt.delimiter= "";
 			prompt.start();
 			prompt.get(schema3, function (err, result) {
-				connection.query("INSERT INTO Products (ProductName,DepartmentName,Price,StockQuantity)VALUES ('"+result.productName+"','"+result.departmentName+"',"+result.price+","+result.stockQuantity+");", function (err, result) {
+				connection.query("INSERT INTO Products (ProductName,DepartmentName,Price,StockQuantity)VALUES ('"+result.productName+"','"+result.departmentName+"',"+result.price+","+result.stockQuantity+");", function (err, res) {
 					console.log("Product Added!");
 					console.log("");
 				});
-				connection.query("SELECT * FROM Products", function (err, result) {
-					var addedProduct = result[result.length-1];
-					console.log("ItemID: " + addedProduct.ItemID);
-					console.log("Product Name: " + addedProduct.ProductName);
-					console.log("Department Name: " + addedProduct.DepartmentName);
-					console.log("Price:" + addedProduct.Price);
-					console.log("Stock Quantity: " + addedProduct.StockQuantity);
+				connection.query("SELECT * FROM Products WHERE ProductName='"+result.productName+"';", function (err, res) {
+					console.log("ItemID: " + res[0].ItemID);
+					console.log("Product Name: " + res[0].ProductName);
+					console.log("Department Name: " + res[0].DepartmentName);
+					console.log("Price:" + res[0].Price);
+					console.log("Stock Quantity: " + res[0].StockQuantity);
 				});
 			});
 		}
